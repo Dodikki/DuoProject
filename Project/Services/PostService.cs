@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 
 namespace Project.Services
 {
-    internal class Service
+    internal class PostService
     {
         private readonly HttpClient _http;
 
-        public UserService()
+        public PostService()
         {
             _http = ApiClient.Instance;
         }
 
-        public async Task<List<UserDto>> GetAllAsync()
+        public async Task<List<PostDto>> GetAllAsync()
         {
             try
             {
-                return await _http.GetFromJsonAsync<List<UserDto>>("/api/users");
+                return await _http.GetFromJsonAsync<List<PostDto>>("/api/posts");
             }
             catch (HttpRequestException ex)
             {
@@ -36,5 +36,29 @@ namespace Project.Services
                 throw;
             }
         }
+
+        public async Task<PostDto> PostNewPost(PostDto newPost)
+        {
+            try
+            {
+                var post = await _http.PostAsJsonAsync("/api/posts", newPost);
+
+                post.EnsureSuccessStatusCode();
+
+                return await post.Content.ReadFromJsonAsync<PostDto>();
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error HTTP request: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error get all users: {ex.Message}");
+                throw;
+            }
+        }
+
+
     }
 }
