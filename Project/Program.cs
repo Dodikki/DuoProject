@@ -1,28 +1,42 @@
-﻿using Project.Services;
+﻿using Project.Dto;
+using Project.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace http_practice
+namespace Project
 {
     internal class Program
     {
-        private static UserService _userService;
+        private static PostService _postService;
 
         static async Task Main(string[] args)
         {
-            _userService = new UserService();
+            _postService = new PostService();
 
-            var users = await _userService.GetAllAsync();
+            var posts = await _postService.GetAllAsync();
 
-            foreach (var user in users)
+            PostService service = new PostService();
+
+
+            PostDto newPost = new PostDto
             {
-                Console.WriteLine($"ID: {user.Id}");
-                Console.WriteLine($"Username: {user.Username}");
-                Console.WriteLine($"Email: {user.Email}");
+                Title = "test Title",
+                Content = "test Content"
+            };
+
+            PostDto createdPost = await service.PostNewPost(newPost);
+
+
+            foreach (var post in posts)
+            {
+                Console.WriteLine($"ID: {post.Id}");
+                Console.WriteLine($"Title: {post.Title}");
+                Console.WriteLine($"Content: {post.Content}");
             }
+
         }
     }
 }

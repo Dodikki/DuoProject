@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Project.Services
 {
-    internal class UserService
+    internal class Service
     {
         private readonly HttpClient _http;
 
