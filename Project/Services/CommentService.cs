@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace http_practice.Services
+namespace Project.Services
 {
     internal class CommentService
     {
